@@ -1,3 +1,4 @@
+language: generic
 sudo: required
 services:
   - docker
@@ -13,3 +14,10 @@ after_success:
   - docker build -t lispavel/multi-nginx ./nginx
   - docker build -t lispavel/multi-server ./server
   - docker build -t lispavel/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push lispavel/multi-client
+  - docker push lispavel/multi-nginx
+  - docker push lispavel/multi-server
+  - docekr push lispavel/multi-worker
